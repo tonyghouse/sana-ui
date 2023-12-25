@@ -39,7 +39,7 @@ function CommandBlock({ dataBlockGroup }: ICommandBlockProps) {
           dataBlockGroup.list.map((dataBlock, index) => {
             return <div className="flex justify-start">
               <div className="pr-1">
-                {dataBlock.data.user === "user" ? <pre> &gt; </pre> : <pre> ~ </pre>}
+                {dataBlock.data.role === "user" ? <pre> &gt; </pre> : <pre> ~ </pre>}
               </div>
               {
                 dataBlock.data.blockType === "code" ?

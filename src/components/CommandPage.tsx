@@ -4,14 +4,17 @@ import { useState } from 'react'
 import { IDataBlock } from "../models/IDataBlock"
 import { separateContent } from "../util/GenericUtil"
 import CommandBlock from "./CommandBlock"
-import { sendDataReqToOpenAI } from './apirequest'
+import { sendReqToOpenAI } from './apirequest'
 import { IDataBlockGroup } from "../models/IDataBlockGroup"
 import { useKeyboardEvent } from '@react-hookz/web';
+import { IMessage } from "../models/IMessage"
 
 export default function MainWindow() {
   const [input, setInput] = useState("");
   const [dataBlockGroups, setDataBlockGroups] = useState<IDataBlockGroup[]>([]);
+  const [messageHistory, setMessageHistory] = useState<IMessage[]>([]);
   const [loading, setLoading] = useState(false);
+  const dataHistory = [];
   
 
   const handleDataSubmit = async () => {
@@ -20,8 +23,12 @@ export default function MainWindow() {
     try {
       if (input && input.trim() !== "") {
         setLoading(true);
-        const response: String = await sendDataReqToOpenAI(input);
+        setMessageHistory([...messageHistory,{user:"user",message:input}]);
+        
+        const response: String = await sendReqToOpenAI(input,messageHistory);
+        setMessageHistory([...messageHistory,{user:"assistant",message:response}]);
         //console.log(response);
+
         const newDataBlocks: IDataBlock[] = mapToDataBlocks(response, input)
         setDataBlockGroups([...dataBlockGroups, {list:newDataBlocks}]);
 
@@ -72,15 +79,16 @@ export default function MainWindow() {
 }
 
 function mapToDataBlocks(response: String, input: string) {
+
   const contentItems = separateContent(response)
 
   const newDataBlocks: IDataBlock[] = []
-  newDataBlocks.push({ data: { content: input, blockType: "text", language: null, user: "user" } })
+  newDataBlocks.push({ data: { content: input, blockType: "text", language: null, role: "user" } })
   contentItems.forEach((item) => {
     if (item.isCodeBlock) {
-      newDataBlocks.push({ data: { content: item.content, blockType: "code", language: item.language, user: "ai" } })
+      newDataBlocks.push({ data: { content: item.content, blockType: "code", language: item.language, role: "assistant" } })
     } else {
-      newDataBlocks.push({ data: { content: item.content, blockType: "text", language: null, user: "ai" } })
+      newDataBlocks.push({ data: { content: item.content, blockType: "text", language: null, role: "assistant" } })
     }
   })
   return newDataBlocks
