@@ -15,7 +15,7 @@ export default function MainWindow() {
   const [dataBlockGroups, setDataBlockGroups] = useState<IDataBlockGroup[]>([]);
   const [messageHistory, setMessageHistory] = useState<IMessage[]>([]);
   const [loading, setLoading] = useState(false);
-  const [hashbar,setHashbar] = useState<boolean>(true);
+  const [hashbar,setHashbar] = useState<boolean>(false);
 
   useKeyboardEvent(
     true,
@@ -80,7 +80,7 @@ export default function MainWindow() {
       <footer className="px-2 pt-1 border-border">
         <div className="flex flex-col items-center justify-center w-full">
           {loading && <div className="animate-ping text-red-600">-------------------------------------</div>}
-          {hashbar && <Input placeholder="#Hashbar" className=" border-[0.01rem] border-gray-700 focus-visible:ring-0 focus-visible:ring-offset-0 " />}
+          {hashbar && <Input placeholder="#" className=" border-[0.01rem] border-gray-700 focus-visible:ring-0 focus-visible:ring-offset-0 " />}
           <Textarea onKeyDown={handleKeyDown} id="data-input"
             className="w-full border-[0.01rem] border-gray-700
             focus-visible:ring-0 focus-visible:ring-offset-0 " placeholder=""
