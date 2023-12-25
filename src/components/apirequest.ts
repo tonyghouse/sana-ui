@@ -6,37 +6,38 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true
 });
 
-export async function sendReqToOpenAIOld(message): Promise<String> {
+// export async function sendReqToOpenAIOld(message): Promise<String> {
+//   try {
+//     const chatCompletion = await openai.chat.completions.create({
+//       model: "gpt-3.5-turbo",
+//       messages: [{ "role": "user", "content": message }],
+//     });
+//     console.log(chatCompletion.choices[0].message);
+
+//     return chatCompletion.choices[0].message.content;
+//   } catch (error) {
+//     console.log("Error when communicating with OPEN AI", error);
+//     return "Command Failed";
+//   }
+// }
+
+
+export async function sendReqToOpenAI(input: String, messageHistory: any[]): Promise<String> {
   try {
+
+    const messageHistoryList = [...messageHistory , {role:"user",content:input}]
+    console.log("message history: ", messageHistoryList);
+
     const chatCompletion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [{ "role": "user", "content": message }],
+      messages: messageHistoryList,
     });
     console.log(chatCompletion.choices[0].message);
 
     return chatCompletion.choices[0].message.content;
   } catch (error) {
     console.log("Error when communicating with OPEN AI", error);
-    return "Command Failed";
-  }
-}
-
-
-export async function sendReqToOpenAI(message: String, messageHistory: any[]): Promise<String> {
-  try {
-
-    console.log("message history: ", messageHistory);
-
-    const chatCompletion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: messageHistory,
-    });
-    console.log(chatCompletion.choices[0].message);
-
-    return chatCompletion.choices[0].message.content;
-  } catch (error) {
-    console.log("Error when communicating with OPEN AI", error);
-    return "Command Failed";
+    return "";
   }
 }
 

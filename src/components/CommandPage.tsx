@@ -23,10 +23,11 @@ export default function MainWindow() {
     try {
       if (input && input.trim() !== "") {
         setLoading(true);
-        setMessageHistory([...messageHistory,{user:"user",message:input}]);
         
         const response: String = await sendReqToOpenAI(input,messageHistory);
-        setMessageHistory([...messageHistory,{user:"assistant",message:response}]);
+
+        setMessageHistory([...messageHistory,
+                     {role:"user",content:input}, {role:"assistant",content:response}]);
         //console.log(response);
 
         const newDataBlocks: IDataBlock[] = mapToDataBlocks(response, input)

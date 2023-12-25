@@ -1,5 +1,5 @@
 
 export interface IMessage {
-    user:String
-    message?:String
+    role:String
+    content?:String
   }
