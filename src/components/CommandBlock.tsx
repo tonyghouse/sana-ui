@@ -37,14 +37,14 @@ function CommandBlock({ dataBlockGroup }: ICommandBlockProps) {
                       hover:border-sky-500  ">
         {
           dataBlockGroup.list.map((dataBlock, index) => {
-            return <div className="flex justify-start">
+            return <div key={index} className="flex justify-start">
               <div className="pr-1">
                 {dataBlock.data.role === "user" ? <pre> &gt; </pre> : <pre> ~ </pre>}
               </div>
               {
                 dataBlock.data.blockType === "code" ?
                   <>
-                    <SyntaxHighlighter ref={textRef} className="flex items-start w-[70%] whitespace-pre "
+                    <SyntaxHighlighter ref={textRef} className="flex items-start w-[90%] whitespace-pre "
                       language={dataBlock.data.language} style={hybrid}>
                       {dataBlock.data.content}
                     </SyntaxHighlighter>

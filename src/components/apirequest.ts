@@ -6,31 +6,17 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true
 });
 
-// export async function sendReqToOpenAIOld(message): Promise<String> {
-//   try {
-//     const chatCompletion = await openai.chat.completions.create({
-//       model: "gpt-3.5-turbo",
-//       messages: [{ "role": "user", "content": message }],
-//     });
-//     console.log(chatCompletion.choices[0].message);
-
-//     return chatCompletion.choices[0].message.content;
-//   } catch (error) {
-//     console.log("Error when communicating with OPEN AI", error);
-//     return "Command Failed";
-//   }
-// }
-
-
-export async function sendReqToOpenAI(input: String, messageHistory: any[]): Promise<String> {
+export async function sendReqToOpenAI(input: String, messageHistoryList: any[]): Promise<String> {
   try {
 
-    const messageHistoryList = [...messageHistory , {role:"user",content:input}]
-    console.log("message history: ", messageHistoryList);
+    const messageHistoryCombo = [...messageHistoryList , {role:"user",content:input}]
+
+    console.log("message history list: ",messageHistoryCombo);
+
 
     const chatCompletion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: messageHistoryList,
+      messages: messageHistoryCombo,
     });
     console.log(chatCompletion.choices[0].message);
 
