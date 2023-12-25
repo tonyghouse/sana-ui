@@ -1,0 +1,20 @@
+{
+    "name": "Terminal",
+    "short_name": "Terminal",
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "scope": "/",
+    "orientation": "portrait",
+    "prefer_related_applications":true,
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+          }
+      
+    ]
+  }

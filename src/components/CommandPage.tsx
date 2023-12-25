@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Textarea } from "@/components/ui/textarea"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IDataBlock } from "../models/IDataBlock"
 import { separateContent } from "../util/GenericUtil"
 import CommandBlock from "./CommandBlock"
@@ -15,7 +15,7 @@ export default function MainWindow() {
   const [dataBlockGroups, setDataBlockGroups] = useState<IDataBlockGroup[]>([]);
   const [messageHistory, setMessageHistory] = useState<IMessage[]>([]);
   const [loading, setLoading] = useState(false);
-  const [hashbar,setHashbar] = useState<boolean>(false);
+  const [hashbar,setHashbar] = useState<boolean>(true);
 
   useKeyboardEvent(
     true,
@@ -80,7 +80,7 @@ export default function MainWindow() {
       <footer className="px-2 pt-1 border-border">
         <div className="flex flex-col items-center justify-center w-full">
           {loading && <div className="animate-ping text-red-600">-------------------------------------</div>}
-          {hashbar && <Input className=" border-[0.01rem] border-gray-700 focus-visible:ring-0 focus-visible:ring-offset-0 " placeholder="#"/>}
+          {hashbar && <Input placeholder="#Hashbar" className=" border-[0.01rem] border-gray-700 focus-visible:ring-0 focus-visible:ring-offset-0 " />}
           <Textarea onKeyDown={handleKeyDown} id="data-input"
             className="w-full border-[0.01rem] border-gray-700
             focus-visible:ring-0 focus-visible:ring-offset-0 " placeholder=""
