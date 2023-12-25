@@ -15,7 +15,7 @@ export default function MainWindow() {
   const [dataBlockGroups, setDataBlockGroups] = useState<IDataBlockGroup[]>([]);
   const [messageHistory, setMessageHistory] = useState<IMessage[]>([]);
   const [loading, setLoading] = useState(false);
-  const [hashbar,setHashbar] = useState<boolean>(false);
+  const [hashbar,setHashbar] = useState<boolean>(true);
 
   useKeyboardEvent(
     true,
