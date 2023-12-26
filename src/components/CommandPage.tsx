@@ -15,13 +15,13 @@ export default function MainWindow() {
   const [dataBlockGroups, setDataBlockGroups] = useState<IDataBlockGroup[]>([]);
   const [messageHistory, setMessageHistory] = useState<IMessage[]>([]);
   const [loading, setLoading] = useState(false);
-  const [hashbar,setHashbar] = useState<boolean>(true);
+  const [hashbar,setHashbar] = useState<boolean>(false);
 
   useKeyboardEvent(
     true,
     (event) => {
-      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
-        console.log("Ctrl (or Cmd) + K is pressed!");
+      if ((event.metaKey || event.ctrlKey) && event.key === '/') {
+        console.log("Ctrl (or Cmd) + / is pressed!");
         setHashbar((prev)=>!prev);
         
       }
