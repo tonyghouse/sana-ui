@@ -3,18 +3,20 @@ import { Textarea } from "@/components/ui/textarea"
 import { useEffect, useState } from 'react'
 import { IDataBlock } from "../models/IDataBlock"
 import CommandBlock from "./CommandBlock"
+//testing branch changes from github app
+import React from "react"
 import { sendReqToOpenAI } from './apirequest'
 import { IDataBlockGroup } from "../models/IDataBlockGroup"
 import { useKeyboardEvent } from '@react-hookz/web';
 import { IMessage } from "../models/IMessage"
 import { Input } from "./ui/input"
 import { mapToDataBlocks } from "../services/DataBlockService"
-import React from "react"
 
 function CommandPage() {
   const [input, setInput] = useState("");
   const [dataBlockGroups, setDataBlockGroups] = useState<IDataBlockGroup[]>([]);
   const [messageHistory, setMessageHistory] = useState<IMessage[]>([]);
+  
   const [loading, setLoading] = useState(false);
   const [slashbar,setSlashbar] = useState<boolean>(false);
 
@@ -24,6 +26,7 @@ function CommandPage() {
       if ((event.metaKey || event.ctrlKey) && event.key === '/') {
         setSlashbar((prev)=>!prev);
       }
+      
     },
     [],
     { eventOptions: { passive: true } }
@@ -38,7 +41,8 @@ function CommandPage() {
         
         if (["clear", "clear context", "clear the context"].includes(input)) {
           setMessageHistory([]);
-        } else {
+        } 
+        else {
           setMessageHistory([...messageHistory,
             { role: "user", content: input }, { role: "assistant", content: response }]);
         }
