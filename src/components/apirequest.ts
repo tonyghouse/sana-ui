@@ -1,29 +1,31 @@
 import { IMessage } from '../models/IMessage';
-import OpenAI from 'openai';
+import axios from 'axios';
 
-const openai = new OpenAI({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true
-});
+
+const AI_API_URL = import.meta.env.VITE_AI_API_URL;
+const AUTH_TOKEN= localStorage.getItem('AuthToken');
+
+const headers = {
+  Authorization: `Bearer ${AUTH_TOKEN}`,
+};
+
 
 export async function sendReqToOpenAI(input: String, messageHistoryList: any[]): Promise<String> {
   try {
-
     const messageHistoryCombo = [...messageHistoryList , {role:"user",content:input}]
 
-    console.log("message history list: ",messageHistoryCombo);
+    console.log("Message history list: ",messageHistoryCombo);
+    
 
+    const postData = {messages: messageHistoryCombo};
 
-    const chatCompletion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: messageHistoryCombo,
-    });
-    console.log(chatCompletion.choices[0].message);
+  
+    const response = await axios.post(AI_API_URL+'/terminal-1', postData,{headers});
 
-    return chatCompletion.choices[0].message.content;
+    return response.data.choices[0].message.content;
   } catch (error) {
     console.log("Error when communicating with OPEN AI", error);
-    return "";
+    return error.toString();
   }
 }
 
