@@ -80,7 +80,9 @@ function CommandPage() {
         <div className="flex flex-col items-center justify-center w-full">
           {loading && <div className="animate-ping text-red-600">-----------------------------</div>}
           {slashbar && <Input placeholder="/" className=" border-[0.01rem] border-gray-700 focus-visible:ring-0 focus-visible:ring-offset-0 " />}
-          <Textarea onKeyDown={handleKeyDown} id="data-input"
+          <Textarea 
+            value={input}
+            onKeyDown={handleKeyDown} id="data-input"
             className="w-full border-[0.01rem] border-gray-700
             focus-visible:ring-0 focus-visible:ring-offset-0 " placeholder=""
             onChange={(e) => setInput(e.target.value)}
