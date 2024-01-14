@@ -10,6 +10,7 @@ import { IMessage } from "../models/IMessage"
 import { Input } from "./ui/input"
 import { mapToDataBlocks } from "../services/DataBlockService"
 import React from "react"
+import { handleSlashbarCommands } from "../services/SlashbarCommandHandler"
 
 function CommandPage() {
   const [input, setInput] = useState("");
@@ -17,6 +18,7 @@ function CommandPage() {
   const [messageHistory, setMessageHistory] = useState<IMessage[]>([]);
   const [loading, setLoading] = useState(false);
   const [slashbar,setSlashbar] = useState<boolean>(false);
+  const [slashbarData,setSlashbarData] = useState<string>("/");
 
   useKeyboardEvent(
     true,
@@ -56,6 +58,13 @@ function CommandPage() {
 
   };
 
+
+  const handleDataSubmitForSlashbar = () =>{
+    console.log("data in slashbar: ",slashbarData);
+    handleSlashbarCommands(slashbarData);
+    setSlashbarData("/");
+  }
+
   const handleKeyDown = (event: any) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
@@ -63,7 +72,12 @@ function CommandPage() {
     }
   };
 
-
+  const handleKeyDownOnSlashbar = (event: any) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      handleDataSubmitForSlashbar();
+    }
+  };
 
   return (
     <div className="w-[100vw] flex flex-col h-screen border-border font-mono">
@@ -79,7 +93,13 @@ function CommandPage() {
       <footer className="px-2 pt-1 border-border">
         <div className="flex flex-col items-center justify-center w-full">
           {loading && <div className="animate-ping text-red-600">-----------------------------</div>}
-          {slashbar && <Input placeholder="/" className=" border-[0.01rem] border-gray-700 focus-visible:ring-0 focus-visible:ring-offset-0 " />}
+          
+          {slashbar && 
+            <Input onKeyDown={handleKeyDownOnSlashbar}  onChange = {(e) => setSlashbarData(e.target.value) } 
+            value={slashbarData}
+            className=" border-[0.01rem] border-gray-700 focus-visible:ring-0 focus-visible:ring-offset-0 " />
+          }
+
           <Textarea 
             value={input}
             onKeyDown={handleKeyDown} id="data-input"
