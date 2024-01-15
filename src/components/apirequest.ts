@@ -20,7 +20,7 @@ export async function sendReqToOpenAI(input: String, messageHistoryList: any[]):
     const postData = {messages: messageHistoryCombo};
 
   
-    const response = await axios.post(AI_API_URL+'/terminal-1', postData,{headers});
+    const response = await axios.post(`${AI_API_URL}/terminal-1`, postData,{headers});
 
     return response.data.choices[0].message.content;
   } catch (error) {
