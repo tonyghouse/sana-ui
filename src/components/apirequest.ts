@@ -10,6 +10,7 @@ const headers = {
 };
 
 
+const finalUrl = `${AI_API_URL}/terminal-1`;
 export async function sendReqToOpenAI(input: String, messageHistoryList: any[]): Promise<String> {
   try {
     const messageHistoryCombo = [...messageHistoryList , {role:"user",content:input}]
@@ -20,8 +21,8 @@ export async function sendReqToOpenAI(input: String, messageHistoryList: any[]):
     const postData = {messages: messageHistoryCombo};
 
   
-    const response = await axios.post(`${AI_API_URL}/terminal-1`, postData,{headers});
-
+    const response = await axios.post(finalUrl, postData,{headers});
+    console.log("url :",finalUrl);
     return response.data.choices[0].message.content;
   } catch (error) {
     console.log("Error when communicating with OPEN AI", error);
