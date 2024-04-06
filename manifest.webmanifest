@@ -1,0 +1,1 @@
+{"name":"Terminal","short_name":"terminal","start_url":"/","display":"standalone","background_color":"#f0e7db","lang":"en","scope":"/","description":"Terminal app","icons":[{"src":"/favicon.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}],"theme_color":"#171717","orientation":"portrait","prefer_related_applications":true}
