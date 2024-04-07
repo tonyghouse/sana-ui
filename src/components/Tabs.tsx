@@ -1,49 +1,69 @@
-import { TabsTrigger, TabsList, TabsContent, Tabs } from "@/components/ui/tabs"
-import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react";
+import CommandPage from "./CommandPage";
 
-export default function Component() {
+export default function Tabs() {
+
+  const [tab, setTab] = useState("tab1");
+  const [commandPages, setCommandPages] = useState({});
+
+  const handleTabClick = (selectedTab) => {
+    setTab(selectedTab);
+
+    if (!commandPages[selectedTab]) {
+      setCommandPages((prevPages) => ({
+        ...prevPages,
+        [selectedTab]: <CommandPage key={selectedTab} />,
+      }));
+    }
+  };
+
+
   return (
-    <div className="w-full">
-      <Tabs className="w-full" defaultValue="terminal1">
-        <TabsList className="grid w-full grid-cols-6 gap-2">
-          <TabsTrigger value="terminal1">Terminal 1</TabsTrigger>
-          <TabsTrigger value="terminal2">Terminal 2</TabsTrigger>
-          <TabsTrigger value="terminal3">Terminal 3</TabsTrigger>
-          <div className="flex justify-center items-center border border-gray-200 hover:border-gray-500 cursor-pointer">
-            +
-          </div>
-        </TabsList>
-        <TabsContent value="terminal1">
-          <Card className="bg-[#000000] text-[#ffffff]">
-            <CardHeader>
-              <CardTitle>Terminal 1</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <p>User@localhost:~$</p>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="terminal2">
-          <Card className="bg-[#000000] text-[#ffffff]">
-            <CardHeader>
-              <CardTitle>Terminal 2</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <p>User@localhost:~$</p>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="terminal3">
-          <Card className="bg-[#000000] text-[#ffffff]">
-            <CardHeader>
-              <CardTitle>Terminal 3</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <p>User@localhost:~$</p>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+    <>
+    <div className="flex items-center justify-between px-4 py-1 border-border">
+      <div className="flex gap-2">
+        <div onClick={()=>handleTabClick("tab1")} className="flex items-center gap-1  px-2 py-0.5 rounded-md">
+          <span className="text-xs font-medium">Tab 1</span>
+        </div>
+
+        <div onClick={()=>handleTabClick("tab2")} className="flex items-center gap-1  px-2 py-0.5 rounded-md">
+          <span className="text-xs font-medium">Tab 2</span>
+        </div>
+
+        <div onClick={()=>handleTabClick("tab3")} className="flex items-center gap-1  px-2 py-0.5 rounded-md">
+          <span className="text-xs font-medium">Tab 3</span>
+        </div>
+      </div>
+      <Button size="icon" variant="ghost">
+        <PlusIcon className="h-3 w-3" />
+        <span className="sr-only">Add new tab</span>
+      </Button>
+
     </div>
+
+    {commandPages[tab]}
+    
+    </>
+  )
+}
+
+function PlusIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M5 12h14" />
+      <path d="M12 5v14" />
+    </svg>
   )
 }
