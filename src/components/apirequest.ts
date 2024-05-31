@@ -15,7 +15,7 @@ const finalUrl = `${AI_API_URL}/terminal-1`;
 export async function sendReqToOpenAI(input: String, messageHistoryList: any[]): Promise<String> {
   try {
     const messageHistoryCombo = [...messageHistoryList , {role:"user",content:input}]
-w
+
     const postData = {messages: messageHistoryCombo};
 
   
@@ -27,5 +27,7 @@ w
     return error.toString();
   }
 }
+
+
 
 
