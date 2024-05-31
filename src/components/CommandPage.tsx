@@ -1,3 +1,4 @@
+"use client"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Textarea } from "@/components/ui/textarea"
 import { useEffect, useState } from 'react'
@@ -7,10 +8,11 @@ import { sendReqToOpenAI } from './apirequest'
 import { IDataBlockGroup } from "../models/IDataBlockGroup"
 import { useKeyboardEvent } from '@react-hookz/web';
 import { IMessage } from "../models/IMessage"
-import { Input } from "./ui/input"
+
 import { mapToDataBlocks } from "../services/DataBlockService"
 import React from "react"
 import { handleSlashbarCommands } from "../services/SlashbarCommandHandler"
+import { Input } from "./ui/input"
 
 function CommandPage() {
   const [input, setInput] = useState("");
