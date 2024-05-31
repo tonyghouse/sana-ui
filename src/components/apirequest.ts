@@ -1,19 +1,17 @@
 "use client"
-import { IMessage } from '../models/IMessage';
 import axios from 'axios';
 
 
 const AI_API_URL = process.env.NEXT_PUBLIC_AI_API_URL;
-const AUTH_TOKEN= localStorage.getItem('SanaAuthToken');
-
-const headers = {
-  Authorization: `Bearer ${AUTH_TOKEN}`,
-};
 
 
 const finalUrl = `${AI_API_URL}/terminal-1`;
-export async function sendReqToOpenAI(input: String, messageHistoryList: any[]): Promise<String> {
+export async function sendReqToOpenAI(input: String, messageHistoryList: any[], authToken:string|null): Promise<String> {
   try {
+      const headers = {
+        Authorization: `Bearer ${authToken}`,
+      };
+  
     const messageHistoryCombo = [...messageHistoryList , {role:"user",content:input}]
 
     const postData = {messages: messageHistoryCombo};

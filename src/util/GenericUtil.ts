@@ -1,4 +1,4 @@
-export function separateContent(input) {
+export function separateContent(input:string) {
     // The regular expression to match code blocks
     const regex = /```(\w+)\s*([\s\S]*?)```/g;
   

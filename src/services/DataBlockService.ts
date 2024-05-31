@@ -3,7 +3,7 @@ import { IDataBlock } from "../models/IDataBlock"
 import { separateContent } from "../util/GenericUtil"
 
 
-export function mapToDataBlocks(response: String, input: string) {
+export function mapToDataBlocks(response: string, input: string) {
     const contentItems = separateContent(response)
 
     const newDataBlocks: IDataBlock[] = []

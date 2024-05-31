@@ -34,11 +34,11 @@ function CommandPage() {
   );
 
   const handleDataSubmit = async () => {
-
+    const authToken = localStorage.getItem('SanaAuthToken');
     try {
       if (input && input.trim() !== "") {
         setLoading(true);
-        const response: String = await sendReqToOpenAI(input, messageHistory);
+        const response: String = await sendReqToOpenAI(input, messageHistory,authToken);
         
         if (["clear", "clear context", "clear the context"].includes(input)) {
           setMessageHistory([]);
@@ -47,7 +47,7 @@ function CommandPage() {
             { role: "user", content: input }, { role: "assistant", content: response }]);
         }
 
-        const newDataBlocks: IDataBlock[] = mapToDataBlocks(response, input)
+        const newDataBlocks: IDataBlock[] = mapToDataBlocks(response.valueOf(), input)
         setDataBlockGroups([...dataBlockGroups, { list: newDataBlocks }]);
 
         setInput("");
